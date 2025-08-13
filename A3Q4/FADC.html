@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Question 8 PROJECT</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="body-HOME">
+    <header class="header-HOME">
+      <div class="header-content">
+        <h1>
+          <span>Furry Friends Forever Adoption Center</span>
+          <a href="index.html">
+            <img src="Logo.jpg" alt="Kitty and Doggo" width="150" height="150"
+          /></a>
+        </h1>
+      </div>
+      <p id="current-time" style="font-size: 18px; margin-top: 10px"></p>
+    </header>
+    <div id="container">
+      <nav class="nav-HOME">
+        <a href="index.html">Home</a>
+        <a href="FADC.html">Find a Dog/Cat</a>
+        <a href="DC.html">Dog Care</a>
+        <a href="CC.html">Cat Care</a>
+        <a href="CAC.html">Create an Acount</a>
+        <a href="login.html">Login</a>
+        <a href="HAPTGA.html">Have a Pet to Give Away</a>
+        <a href="CU.html">Contact Us</a>
+        <a href="/logout">Logout</a>
+      </nav>
+      <main class="main-HOME" style="font-size: 16px">
+        <h3>Find a Dog or a Cat</h3>
+        <form id="adoptionForm" action="/find-pets" method="POST">
+          <fieldset
+            style="background-color: lightpink; border: coral solid 8px"
+          >
+            <legend style="color: saddlebrown">
+              <b>Time To Find A Best Friend</b>
+            </legend>
+            <br />
+            <label style="color: saddlebrown"><b>Type of Pet:</b></label>
+            <select name="pet_type" id="pet_type">
+              <option value="Dog">Dog</option>
+              <option value="Cat">Cat</option>
+            </select>
+            <br /><br />
+            <label style="color: saddlebrown"><b>Pet Breed:</b></label>
+            <select name="breed" id="breed">
+              <option value="Doesn't matter">Doesn't matter</option>
+              <option value="Labrador">Labrador</option>
+              <option value="Pomeranian">Pomeranian</option>
+              <option value="British Shorthair">British Shorthair</option>
+              <option value="Siamese">Siamese</option>
+            </select>
+            <br /><br />
+            <label style="color: saddlebrown"><b>Preferred Age:</b></label>
+            <input type="radio" name="age" value="Doesn't matter" />
+            <label>Doesn't matter</label>
+            <input type="radio" name="age" value="Puppy/Kitten" />
+            <label>Puppy/Kitten</label>
+            <input type="radio" name="age" value="Young (1-3 years)" />
+            <label>Young (1-3 years)</label>
+            <input type="radio" name="age" value="Adult (4-7 years)" />
+            <label>Adult (4-7 years)</label>
+            <input type="radio" name="age" value="Senior (8+ years)" />
+            <label>Senior (8+ years)</label>
+            <br /><br />
+            <label style="color: saddlebrown"><b>Preferred Gender:</b></label>
+            <input type="radio" name="gender" value="Doesn't matter" />
+            <label>Doesn't matter</label>
+            <input type="radio" name="gender" value="Male" />
+            <label>Male</label>
+            <input type="radio" name="gender" value="Female" />
+            <label>Female</label>
+            <br /><br />
+            <label style="color: saddlebrown"><b>Compatibility:</b></label>
+            <input
+              type="checkbox"
+              name="compatibility"
+              value="Gets along with other dogs"
+            />
+            <label>Gets along with other dogs</label>
+            <input
+              type="checkbox"
+              name="compatibility"
+              value="Gets along with other cats"
+            />
+            <label>Gets along with other cats</label>
+            <input
+              type="checkbox"
+              name="compatibility"
+              value="Gets along with small children"
+            />
+            <label>Gets along with small children</label>
+            <br /><br />
+            <button type="submit">Submit</button>
+            <button type="reset">Clear</button>
+          </fieldset>
+        </form>
+      </main>
+    </div>
+    <footer class="footer-HOME">
+      <p>
+        &copy; 2025 Furry Friends Forever |
+        <a href="PD.html" style="color: blue">Privacy/Disclaimer</a>
+      </p>
+    </footer>
+    <script src="javascript.js"></script>
+  </body>
+</html>

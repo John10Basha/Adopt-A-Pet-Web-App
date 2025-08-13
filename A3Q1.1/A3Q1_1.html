@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>A3Q1</title>
+  </head>
+  <body>
+    <h1>A3Q1</h1>
+    <p>Please select a function to call from the server</p>
+    <form action="/findSummation" method="GET">
+      <label> Enter a number</label>
+      <input type="text" name="number" />
+      <button type="submit">Submit</button>
+    </form>
+    <br />
+    <form action="/upperCaseFirstAndLast" method="GET">
+      <label>Enter a string</label>
+      <input type="text" name="string" />
+      <button type="submit">Submit</button>
+    </form>
+    <br />
+    <form action="/findAverageAndMedian" method="GET">
+      <label>Enter a list of numbers separated by commas</label>
+      <input type="text" name="numArr" />
+      <button type="submit">Submit</button>
+    </form>
+    <br />
+    <form action="/find4Digits" method="GET">
+      <label>Enter a string of numbers with spaces</label>
+      <input type="text" name="fourDigits" />
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>

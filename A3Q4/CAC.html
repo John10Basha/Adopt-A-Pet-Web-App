@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Question 8 PROJECT</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="body-HOME">
+    <header class="header-HOME">
+      <div class="header-content">
+        <h1>
+          <span>Furry Friends Forever Adoption Center</span>
+          <a href="index.html">
+            <img src="Logo.jpg" alt="Kitty and Doggo" width="150" height="150"
+          /></a>
+        </h1>
+      </div>
+      <p id="current-time" style="font-size: 18px; margin-top: 10px"></p>
+    </header>
+    <div id="container">
+      <nav class="nav-HOME">
+        <a href="index.html">Home</a>
+        <a href="FADC.html">Find a Dog/Cat</a>
+        <a href="DC.html">Dog Care</a>
+        <a href="CC.html">Cat Care</a>
+        <a href="CAC.html">Create an Acount</a>
+        <a href="login.html">Login</a>
+        <a href="HAPTGA.html">Have a Pet to Give Away</a>
+        <a href="CU.html">Contact Us</a>
+        <a href="/logout">Logout</a>
+      </nav>
+      <main class="main-HOME" style="font-size: 16px">
+        <h3 style="text-align: center; font-size: 25px">Create an Account</h3>
+        <div id="account-creation-form">
+          <form id="createAccountForm" method="POST" action="/create-account">
+            <label>Username:</label>
+            <input type="text" id="username" name="username" required />
+            <br /><br />
+            <label>Password:</label>
+            <input type="password" id="password" name="password" required />
+            <p id="password-info">
+              Username can contain letters (both upper and lower case) and
+              digits only.Password must be at least 4 characters long and
+              contain at least one letter and one digit.
+            </p>
+            <br />
+            <button type="submit">Create Account</button>
+          </form>
+        </div>
+      </main>
+    </div>
+    <footer class="footer-HOME">
+      <p>
+        &copy; 2025 Furry Friends Forever |
+        <a href="PD.html" style="color: blue">Privacy/Disclaimer</a>
+      </p>
+    </footer>
+    <script src="javascript.js"></script>
+  </body>
+</html>
