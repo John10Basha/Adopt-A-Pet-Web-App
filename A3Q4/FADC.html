@@ -1,7 +1,10 @@
+<!--This is the Find A Dog or Cat page-->
+<!--Lets user see available pets based on criterias they select-->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Question 8 PROJECT</title>
+    <title>Adopt A Pet Web</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body class="body-HOME">
@@ -30,6 +33,9 @@
       </nav>
       <main class="main-HOME" style="font-size: 16px">
         <h3>Find a Dog or a Cat</h3>
+        <!--This is a form that the user fills out for a dog or cat they want to find-->
+        <!--When user fills out form, javascript.js validates on submit with id="adoptionForm"-->
+        <!--Express uses /find-pets to send a response to the user of the filtered pets-->
         <form id="adoptionForm" action="/find-pets" method="POST">
           <fieldset
             style="background-color: lightpink; border: coral solid 8px"
@@ -47,10 +53,10 @@
             <label style="color: saddlebrown"><b>Pet Breed:</b></label>
             <select name="breed" id="breed">
               <option value="Doesn't matter">Doesn't matter</option>
-              <option value="Labrador">Labrador</option>
-              <option value="Pomeranian">Pomeranian</option>
-              <option value="British Shorthair">British Shorthair</option>
-              <option value="Siamese">Siamese</option>
+              <option value="Labrador">(Dog) Labrador</option>
+              <option value="Pomeranian">(Dog) Pomeranian</option>
+              <option value="British Shorthair">(Cat) British Shorthair</option>
+              <option value="Siamese">(Cat) Siamese</option>
             </select>
             <br /><br />
             <label style="color: saddlebrown"><b>Preferred Age:</b></label>
