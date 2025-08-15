@@ -1,7 +1,10 @@
+<!--This is the Have A Pet To Give Away page-->
+<!--Users must be logged in to submit a pet to give away-->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Question 8 PROJECT</title>
+    <title>Have A Pet To Give Away</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body class="body-HOME">
@@ -31,6 +34,8 @@
       <main class="main-HOME" style="font-size: 16px">
         <h3>Have A Pet To Give Away?</h3>
         <form id="GAform" action="/submit-pet-form" method="post">
+          <!--Using the id="GAform" we verify that all values are filled-->
+          <!--Express uses /submit-pet-form to store on info in availablePetInformation.txt-->
           <fieldset style="background-color: gray; border: dimgray solid 7px">
             <legend><b>Pet Give Away Form</b></legend>
             <br />

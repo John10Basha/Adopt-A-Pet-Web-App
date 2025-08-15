@@ -1,7 +1,10 @@
+<!--This is the Create An Account page-->
+<!---->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Question 8 PROJECT</title>
+    <title>Create An Account</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body class="body-HOME">
@@ -32,6 +35,9 @@
         <h3 style="text-align: center; font-size: 25px">Create an Account</h3>
         <div id="account-creation-form">
           <form id="createAccountForm" method="POST" action="/create-account">
+            <!--On submit, this form POSTs to /create-account-->
+            <!--Inputs with a name attribute are sent and become req.body fields on the server-->
+            <!--Then added to myLogins.txt-->
             <label>Username:</label>
             <input type="text" id="username" name="username" required />
             <br /><br />

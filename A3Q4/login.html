@@ -1,7 +1,10 @@
+<!--This is the Login page-->
+<!--Before a user can successfully login, they must create and account first-->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Question 8 PROJECT</title>
+    <title>Login</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body class="body-HOME">
@@ -32,6 +35,9 @@
         <h3 style="text-align: center; font-size: 25px">Login</h3>
         <div id="login">
           <form id="createAccountForm" method="POST" action="/login">
+            <!--On submit, this form POSTs to /login-->
+            <!--Inputs with a name attribute are sent and become req.body fields on the server-->
+            <!--Then searched in myLogins.txt to start a session-->
             <label>Username:</label>
             <input type="text" id="lUsername" name="lUsername" required />
             <br /><br />
