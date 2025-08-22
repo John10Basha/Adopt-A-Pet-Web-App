@@ -25,7 +25,7 @@ app.use(session({
     saveUninitialized: true,
 }));
 
-//In the create an account page (CAC.html), user submits potential username and password
+//In the create an account page (CAC.html), user submits potential username and password to be saved
 //Both fields get checked here, if they both pass, they get appended to myLogins.txt 
 app.post("/create-account", (req, res) => {
     //Pulling username and password from the form body into variables
@@ -43,7 +43,7 @@ app.post("/create-account", (req, res) => {
     try {
         //If myLogins.txt exists, read it as text. If it does not exist, read it as an empty string
         const data = fs.existsSync('myLogins.txt') ? fs.readFileSync('myLogins.txt', 'utf8') : "";
-        //Split the file into lines at every line. At every line, split the values between ":" and extract the value before ":", which is the username 
+        //Split the file into lines at every newline. At every line, split the values between ":" and extract the value before ":", which is the username 
         const usernames = data.split('\n').map(line => line.split(':')[0]);
         //If the username submitted by the user matches with one of the usernames in myLogins.txt send a message that its taken
         if (usernames.includes(username)) {
@@ -68,26 +68,39 @@ app.post("/create-account", (req, res) => {
     }
 });
 
+//In the login page (login.html), the user submits username and password in order to start a session
+//If the username and password can match a pair in myLogins.txt, we can start a new session
 app.post("/login", (req, res) => {
+    //Extracting username and password from the form body into variables
     const { lUsername, lPassword } = req.body;
 
+    //Ensuring username is only letters/digits (no spaces or symbols)
+    //Or password must contain at least a letter, at least a digit, composed of only letters and digits, and 4 characters minimum
+    //If one of these criterias are not met we send a message to user
     if (!/^[a-zA-Z0-9]+$/.test(lUsername) || !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,}$/.test(lPassword)) {
         return res.send("Invalid username or password format");
     }
 
     try {
+        //If myLogins.txt exists, read it as text. If it does not exist, read it as an empty string
         const data = fs.existsSync('myLogins.txt') ? fs.readFileSync('myLogins.txt', 'utf8') : "";
+        //Split the file into lines at every newline. At every line, split the values between ":", what is found at [0] is the username and at [1] is the password
         const credentials = data.split('\n').map(line => line.split(':'));
+        //Compare creds from myLogins.txt with lUsername and lPassword
         const matchedUser = credentials.find(cred => cred[0] === lUsername && cred[1] === lPassword);
 
+        //matchedUser will only be true if lUsername and lPassword match with a pair myLogins.txt
         if (matchedUser) {
             //Start a new session
             req.session.username = lUsername;
             res.send("Login successful. Proceed to fill out the form.");
         } else {
+            //If user did not enter valid credentials to login and they did not match with any pair in myLogins.txt display a message
             res.send("Login failed. Incorrect username or password.");
         }
-    } catch (err) {
+    }
+    //If something goes wrong dont crash server 
+    catch (err) {
         console.error("Error reading myLogins.txt:", err);
         res.send("Server error.");
     }
