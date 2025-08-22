@@ -109,7 +109,7 @@ app.post("/login", (req, res) => {
 //In the Have A Pet To Give Away page (HAPTGA.html), the user submits the info for a pet they want to put up for adoption
 //The user may only give away a pet if they are logged in
 app.post("/submit-pet-form", (req, res) => {
-    //Extracting username and password from the form body into variables
+    //Extracting entered fields from the form body into variables
     const { GA_pet_type, GA_breed, GA_age, GA_gender, compatibility, GA_brag, First_Name, Last_Name, email } = req.body;
     
     //Grab the logged-in username from the session
@@ -149,13 +149,22 @@ app.post("/submit-pet-form", (req, res) => {
     }
 });
 
+//In Find A Dog/Cat page (FADC.html), the user can enter the criterias they are interested in
+//Based on their interests, the server will return to them with any possible matches
 app.post("/find-pets", (req, res) => {
+    //Extracting entered fields from the form body into variables
     const { pet_type, breed, age, gender, compatibility } = req.body;
+    //Path where all listings are found
     const filePath = 'availablePetInformation.txt';
 
     try {
+        //If availablePetInformation.txt exists, read it as text. If it does not exist, read it as an empty string
         const fileData = fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : "";
+        //Building an array of pet objects from the text file
+        //Dropping stray newlines/spaces at the edges
+        //one line = one pet record
         const pets = fileData.trim().split('\n').map(line => {
+             // Break the line into its 11 fields using ":"
             const [petId, username, petType, petBreed, petAge, petGender, petCompatibility, petDescription, firstName, lastName, email] = line.split(':');
             return {
                 petId,
@@ -172,6 +181,7 @@ app.post("/find-pets", (req, res) => {
             };
         });
 
+        //Filter pets that match the user's choices in new array
         const matches = pets.filter(pet => {
             return (pet.petType === pet_type) &&
                    (breed === "Doesn't matter" || pet.petBreed === breed) &&
@@ -180,6 +190,7 @@ app.post("/find-pets", (req, res) => {
                    (!compatibility || (pet.petCompatibility && pet.petCompatibility.includes(compatibility)));
         });
 
+        //If matches array is filled, display the findings
         if (matches.length > 0) {
             let text = `Matching Pets Found:\n\n`;
             matches.forEach(pet => {
@@ -192,12 +203,15 @@ app.post("/find-pets", (req, res) => {
                 text += `Contact: ${pet.firstName} ${pet.lastName} | Email: ${pet.email}\n`;
                 text += `-----------------------------\n`;
             });
+            //<pre> preserves newlines/spaces so it renders nicely
             res.send(`<pre>${text}</pre>`);
         } else {
             res.send("No pets match your criteria. Please try different options.");
         }
 
-    } catch (err) {
+    } 
+    //If something goes wrong dont crash server 
+    catch (err) {
         console.error("Error reading pet file:", err);
         res.send("Server error while finding pets.");
     }
