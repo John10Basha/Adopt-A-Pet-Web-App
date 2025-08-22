@@ -1,45 +1,68 @@
+//This file starts the Adopt A Pet server
+//It defines GET routes to show/read info and POST routes to receive form data and do actions like create account or find pets)
+
+//Importing web framework (Express), path/files helpers, body parsing (req.body), and session support
+//Then create the Express app instance and start
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const session = require("express-session");
-
 const app = express();
 
+//Lets the server serve files directly from this folder. Anything in project root is reachable by url
 app.use(express.static(__dirname));
+//Reads HTML form posts and puts the fields on req.body
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//Remembers users between requests
+//secret: signs the session cookie
+//resave: false: don’t rewrite the session if nothing changed
+//saveUninitialized: true: give new visitors a session right away
 app.use(session({
     secret: 'your_secret_key_here',
     resave: false,
     saveUninitialized: true,
 }));
 
+//In the create an account page (CAC.html), user submits potential username and password
+//Both fields get checked here, if they both pass, they get appended to myLogins.txt 
 app.post("/create-account", (req, res) => {
+    //Pulling username and password from the form body into variables
     const { username, password } = req.body;
 
+    //Ensuring username is only letters/digits (no spaces or symbols)
     if (!/^[a-zA-Z0-9]+$/.test(username)) {
         return res.send("Username must be alphanumeric.");
     }
+    //Password must contain at least a letter, at least a digit, composed of only letters and digits, and 4 characters minimum
     if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,}$/.test(password)) {
         return res.send("Password must be at least 4 characters long with letters and numbers.");
     }
 
     try {
+        //If myLogins.txt exists, read it as text. If it does not exist, read it as an empty string
         const data = fs.existsSync('myLogins.txt') ? fs.readFileSync('myLogins.txt', 'utf8') : "";
+        //Split the file into lines at every line. At every line, split the values between ":" and extract the value before ":", which is the username 
         const usernames = data.split('\n').map(line => line.split(':')[0]);
+        //If the username submitted by the user matches with one of the usernames in myLogins.txt send a message that its taken
         if (usernames.includes(username)) {
             return res.send("Username is already taken.");
         }
+    //If something goes wrong dont crash server    
     } catch (err) {
         console.error("Error reading myLogins.txt:", err);
     }
 
+    //If username was able to pass the try block above we reach this try block
     try {
+        //Add the username and password to myLogins.txt
         fs.appendFileSync('myLogins.txt', `${username}:${password}\n`);
         res.send("Account created successfully.");
-        //res.redirect("/CAC");
-    } catch (err) {
+        //res.redirect("/CAC.html");
+    } 
+    //If something goes wrong dont crash server
+    catch (err) {
         console.error("Error writing to myLogins.txt:", err);
         res.send("Server error.");
     }
