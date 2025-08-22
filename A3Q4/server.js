@@ -106,29 +106,44 @@ app.post("/login", (req, res) => {
     }
 });
 
+//In the Have A Pet To Give Away page (HAPTGA.html), the user submits the info for a pet they want to put up for adoption
+//The user may only give away a pet if they are logged in
 app.post("/submit-pet-form", (req, res) => {
+    //Extracting username and password from the form body into variables
     const { GA_pet_type, GA_breed, GA_age, GA_gender, compatibility, GA_brag, First_Name, Last_Name, email } = req.body;
-    const username = req.session.username;
     
+    //Grab the logged-in username from the session
+    const username = req.session.username;
+    //If there’s no username in the session, stop right here and tell them they must log in
     if (!username) {
         return res.send("You must be logged in to submit a pet.");
     }
 
+    //Shortcut variable for the filename we’ll read/write
     const filePath = 'availablePetInformation.txt';
+    //If availablePetInformation.txt exists, read it as text. If it does not exist, read it as an empty string
     const fileData = fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : "";
+    //If the file is empty, use an empty list; otherwise we split the text into one array item per line.
     const lines = fileData.trim() === "" ? [] : fileData.trim().split('\n');
+    //Make a new numeric ID by taking how many lines already exist and adding 1
     const newId = lines.length + 1;
 
+    //The compatibility field might be an array or a single string.
+    //If it’s an array we join them with a comma. If it’s a single value or missing we use that value or ""
     const compatibilityStr = Array.isArray(compatibility)
         ? compatibility.join(",")
         : compatibility || "";
 
+    //Building our entry with values we obtained from object deconstructing
     const entry = `${newId}:${username}:${GA_pet_type}:${GA_breed}:${GA_age}:${GA_gender}:${compatibility}:${GA_brag}:${First_Name}:${Last_Name}:${email}`;
 
+    //Adding our entry to the availablePetInformation.txt
     try {
         fs.appendFileSync(filePath, `${entry}\n`);
         res.send("Pet information submitted successfully.");
-    } catch (err) {
+    } 
+    //If something goes wrong dont crash server 
+    catch (err) {
         console.error("Error writing to availablePetInformation.txt:", err);
         res.send("Server error.");
     }
