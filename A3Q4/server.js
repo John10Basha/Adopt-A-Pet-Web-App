@@ -217,7 +217,6 @@ app.post("/find-pets", (req, res) => {
     }
 });
 
-
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "index.html"));
 });
@@ -251,10 +250,12 @@ app.get("/CU", (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
+    //If not logged in, there’s no session to destroy
     if (!req.session.username) {
         return res.send("Cannot log out. You are not logged in.");
     }
 
+    //Destroy the session
     req.session.destroy(err => {
         if (err) {
             console.error("Error destroying session:", err);
@@ -268,6 +269,7 @@ app.get("/PD", (req, res) => {
     res.sendFile(path.join(__dirname, "PD.html"));
 });
 
+// Start the server on port 3000; once ready, print the local URL.
 app.listen(3000, () => {
     console.log("Server is running at http://localhost:3000");
 });
