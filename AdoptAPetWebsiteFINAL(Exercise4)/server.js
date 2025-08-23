@@ -269,7 +269,7 @@ app.get("/PD", (req, res) => {
     res.sendFile(path.join(__dirname, "PD.html"));
 });
 
-// Start the server on port 3000; once ready, print the local URL.
+// Start the server on port 3000; once ready, print the local URL
 app.listen(3000, () => {
     console.log("Server is running at http://localhost:3000");
 });
